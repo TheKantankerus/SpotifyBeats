@@ -5,6 +5,7 @@ import 'rxjs/add/observable/interval';
 import 'rxjs/add/observable/timer';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/repeat';
+import 'rxjs/add/operator/takeWhile';
 import { Subscription } from 'rxjs/Subscription';
 import * as $ from 'jquery';
 import { GraphingService } from './graphing.service';
