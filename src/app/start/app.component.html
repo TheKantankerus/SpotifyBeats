@@ -1,0 +1,16 @@
+<div id="total-container" style="height: 100vh">
+  <h1>
+    Maybe one day there will be a cool spotify visualizer here...
+  </h1>
+
+  <button class="warning-button" (click)="login()" id="biglogin" style="z-index: 10000; position: absolute">Get Authorized!</button>
+
+  <h1 *ngIf="loggedIn">Hey you logged in!</h1>
+
+  <span id="tunnel-container"></span>
+  <span id="quart-container"></span>
+  <span id="sq-container"></span>
+
+  <div style="width: 100%; height: 100%; z-index: 111; position:absolute; top:0px" id="graph"> </div>
+
+</div>
