@@ -1,8 +1,8 @@
 import { Component } from "@angular/core";
-import { Observable } from "rxjs/Observable";
+import { Observable } from 'rxjs/Observable';
 import { Subscription } from "rxjs/Subscription";
 import * as $ from "jquery";
-import { VisualizerService } from "../visualizer/visualizer.service";
+import { VisualizerService } from '../visualizer/visualizer.service';
 import { GraphingService } from "../visualizer/graphing.service";
 
 @Component({
@@ -26,7 +26,7 @@ export class AppComponent {
   }
 
   authToken: string;
-  clientId: string = "c3720752fc71445eb83d734b369f34a8";
+  clientId = "c3720752fc71445eb83d734b369f34a8";
   redirectUri: string = "https://sleepy-citadel-97880.herokuapp.com/callback";
   scopes: string[] = [
     "user-read-currently-playing",
@@ -35,10 +35,10 @@ export class AppComponent {
   ];
 
   sections: any[];
-  sectionNumber: number = 0;
+  sectionNumber = 0;
 
   trackURI: string;
-  trackPlaying: boolean = false;
+  trackPlaying = false;
   trackDuration: number;
   trackPosition: number;
   artistName: string;
@@ -62,8 +62,8 @@ export class AppComponent {
   createRequest(method: string, url: string, onload: any): XMLHttpRequest {
     let request: XMLHttpRequest = new XMLHttpRequest();
     request.open(method, url);
-    if (method !== "GET") {
-      request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+    if (method !== 'GET') {
+      request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
     }
     request.onerror = () => { return; };
     request.onload = onload.bind(this, request);
@@ -72,19 +72,19 @@ export class AppComponent {
 
   createAuthorizedRequest(method: string, url: string, onload: any): XMLHttpRequest {
     let request: XMLHttpRequest = this.createRequest(method, url, onload);
-    request.setRequestHeader("Authorization", "Bearer " + this.accessToken);
+    request.setRequestHeader('Authorization', 'Bearer ' + this.accessToken);
     return request;
   }
 
   validateAuthentication(): void {
-    console.log("location.hash", location.hash);
+    console.log('location.hash', location.hash);
     let lochash: string = location.hash.substr(1);
-    let newAccessToken: string = lochash.substr(lochash.indexOf("access_token=")).split("&")[0].split("=")[1];
+    let newAccessToken: string = lochash.substr(lochash.indexOf('access_token=')).split('&')[0].split('=')[1];
     if (newAccessToken) {
-      localStorage.setItem("access_token", newAccessToken);
+      localStorage.setItem('access_token', newAccessToken);
       this.accessToken = newAccessToken;
     } else {
-      this.accessToken = localStorage.getItem("access_token");
+      this.accessToken = localStorage.getItem('access_token');
     }
     if (this.accessToken) {
       this.connect();
@@ -96,10 +96,10 @@ export class AppComponent {
   }
 
   connect(): void {
-    console.log("Connecting with access token: " + this.accessToken);
+    console.log('Connecting with access token: ' + this.accessToken);
     this.getUserInformation((userinfo: any) => {
       if (!userinfo) {
-        this.accessToken = "";
+        this.accessToken = '';
         this.showLogin();
         return;
       }
@@ -111,14 +111,14 @@ export class AppComponent {
   }
 
   getUserInformation(callback: any): void {
-    this.createAuthorizedRequest("GET", "https://api.spotify.com/v1/me", (request: any) => {
+    this.createAuthorizedRequest('GET', 'https://api.spotify.com/v1/me', (request: any) => {
       if (request.status < 200 || request.status >= 400) {
         callback(null);
         return;
       }
 
       if (request.status === 204) {
-        console.log("NO TRACK PLAYING");
+        console.log('NO TRACK PLAYING');
         return;
       }
 
@@ -129,11 +129,11 @@ export class AppComponent {
   }
 
   showLogin(): void {
-    document.getElementById("biglogin").style.display = "block";
+    document.getElementById('biglogin').style.display = 'block';
   }
 
   hideLogin(): void {
-    document.getElementById("biglogin").style.display = "none";
+    document.getElementById('biglogin').style.display = 'none';
   }
 
   pollCurrentlyPlaying(delay: number): void {
@@ -148,8 +148,8 @@ export class AppComponent {
   _pollCurrentlyPlaying(callback: any): void {
     global.gc();
     this.createAuthorizedRequest(
-      "GET",
-      "https://api.spotify.com/v1/me/player/currently-playing",
+      'GET',
+      'https://api.spotify.com/v1/me/player/currently-playing',
       (request: any) => {
         if (request.status < 200 || request.status >= 400) {
           callback();
@@ -157,12 +157,12 @@ export class AppComponent {
         }
 
         if (request.status === 204) {
-          console.log("NO TRACK PLAYING");
+          console.log('NO TRACK PLAYING');
           return;
         }
 
-        var data: any = JSON.parse(request.responseText);
-        console.log("got data", data);
+        let data: any = JSON.parse(request.responseText);
+        console.log('got data', data);
         if (data.item) {
           this.albumURI = data.item.album.uri;
           this.albumImageURL = data.item.album.images[0].url;
@@ -174,7 +174,7 @@ export class AppComponent {
           this.trackDuration = data.item.duration_ms;
           this.trackPlaying = data.is_playing;
 
-          let theSection: any = this.sections[this.sectionNumber];
+          const theSection: any = this.sections[this.sectionNumber];
 
           if (this.viz.secStart <= this.trackPosition / 1000 && theSection) {
             this.viz.tempo = theSection.tempo;
@@ -185,12 +185,12 @@ export class AppComponent {
             this.sectionNumber++;
 
             this.viz.switcher();
-            document.getElementById("total-container").style.background = this.viz.getRandomColor();
-            $("h1").css({ "opacity": 0 });
+            document.getElementById('total-container').style.background = this.viz.getRandomColor();
+            $('h1').css({ 'opacity': 0 });
 
-            console.log("analysis: section number: " + this.sectionNumber + " -- tempo: "
-              + this.viz.tempo + " -- loudness: " + this.viz.loudness
-              + " -- SecStart: " + this.viz.secStart);
+            console.log('analysis: section number: ' + this.sectionNumber + ' -- tempo: '
+              + this.viz.tempo + ' -- loudness: ' + this.viz.loudness
+              + ' -- SecStart: ' + this.viz.secStart);
           }
 
         }
@@ -217,20 +217,20 @@ export class AppComponent {
   }
 
   fetchTrackAnalysis(): void {
-    let id: string = this.trackURI.split(":")[2];
-    this.createAuthorizedRequest("GET", "https://api.spotify.com/v1/audio-analysis/" + id, (request: any) => {
+    let id: string = this.trackURI.split(':')[2];
+    this.createAuthorizedRequest('GET', 'https://api.spotify.com/v1/audio-analysis/' + id, (request: any) => {
       if (request.status < 200 || request.status >= 400) {
         // callback(null);
         return;
       }
 
       if (request.status === 204) {
-        console.log("NO TRACK PLAYING");
+        console.log('NO TRACK PLAYING');
         return;
       }
 
-      let data: any = JSON.parse(request.responseText);
-      console.log("got analysis data", data);
+      const data: any = JSON.parse(request.responseText);
+      console.log('got analysis data', data);
       this.graph.trackAnalysis = data;
       this.sections = data.sections;
       // callback(data);
