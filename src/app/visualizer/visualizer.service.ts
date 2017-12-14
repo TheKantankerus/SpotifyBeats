@@ -170,7 +170,7 @@ export class VisualizerService {
     }
 
     switcher(): void {
-        global.gc();
+
         let rando: number = Math.floor(Math.random() * 3);
 
         while (rando === this.counter) {

@@ -148,7 +148,7 @@ export class AppComponent {
   }
 
   _pollCurrentlyPlaying(callback: any): void {
-    global.gc();
+
     this.createAuthorizedRequest(
       'GET',
       'https://api.spotify.com/v1/me/player/currently-playing',
