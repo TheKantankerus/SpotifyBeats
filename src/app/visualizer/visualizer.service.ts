@@ -1,11 +1,12 @@
-import { Injectable } from "@angular/core";
-import { Observable } from "rxjs/Observable";
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
+import 'rxjs/add/observable/interval';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/repeat';
-import { Subscription } from "rxjs/Subscription";
-import * as $ from "jquery";
-import { GraphingService } from "./graphing.service";
+import { Subscription } from 'rxjs/Subscription';
+import * as $ from 'jquery';
+import { GraphingService } from './graphing.service';
 
 @Injectable()
 export class VisualizerService {
@@ -15,28 +16,28 @@ export class VisualizerService {
     beatInterval = Observable.of(null).switchMap(e => this.setBeat())
         .switchMap(r => this.getBeat()).repeat();
 
-    public tempo: number = 120;
+    public tempo = 120;
     public loudness: number = -Infinity;
-    public secStart: number = 0;
-    public newChart: boolean = true;
+    public secStart = 0;
+    public newChart = true;
 
-    loggedIn: boolean = false;
+    loggedIn = false;
 
-    counter: number = 0;
-    beat: number = 1;
+    counter = 0;
+    beat = 1;
 
     makeSquare(): void {
         this.beatInterval.takeWhile(() => (this.counter % 3 === 0))
             .subscribe((data) => {
-                let div: HTMLElement = document.createElement("div");
+                const div: HTMLElement = document.createElement('div');
                 div.id = data.toString();
-                div.className = "square";
+                div.className = 'square';
                 // div.style.width = (Math.random() * 1000).toString() + "px";
                 div.style.height = (Math.random() * parent.innerHeight).toString() + 'px';
                 div.style.background = this.getRandomColor();
                 div.style.color = this.getRandomColor();
-                div.style.position = "absolute";
-                div.style.top = (Math.random() * parent.innerHeight / 2).toString() + "px";
+                div.style.position = 'absolute';
+                div.style.top = (Math.random() * parent.innerHeight / 2).toString() + 'px';
                 div.style.width = '100%';
                 // div.style.left = (Math.random() * 500).toString() + "px";
                 div.style.opacity = (0.2 + 2 / Math.abs(this.loudness)).toString();
@@ -133,7 +134,7 @@ export class VisualizerService {
     tunnel(): void {
         this.beatInterval.takeWhile(() => (this.counter % 3 === 2))
             .subscribe((data) => {
-                let div: HTMLElement = document.createElement('div');
+                const div: HTMLElement = document.createElement('div');
                 div.id = 'tunnel' + this._divCount;
                 div.className = 'tunnel';
 

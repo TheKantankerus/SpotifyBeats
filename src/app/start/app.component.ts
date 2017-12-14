@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/observable/of';
+import 'rxjs/add/observable/interval';
 import * as $ from 'jquery';
 import { VisualizerService } from '../visualizer/visualizer.service';
 import { GraphingService } from '../visualizer/graphing.service';
