@@ -29,7 +29,7 @@ export class AppComponent {
 
   authToken: string;
   clientId = 'c3720752fc71445eb83d734b369f34a8';
-  redirectUri = 'https://thawing-stream-28487.herokuapp.com//callback';
+  redirectUri = 'https://thawing-stream-28487.herokuapp.com/callback';
   scopes: string[] = [
     'user-read-currently-playing',
     'user-read-playback-state',
