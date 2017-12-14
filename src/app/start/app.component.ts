@@ -1,37 +1,37 @@
-import { Component } from "@angular/core";
+import { Component } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { Subscription } from "rxjs/Subscription";
-import * as $ from "jquery";
+import { Subscription } from 'rxjs/Subscription';
+import * as $ from 'jquery';
 import { VisualizerService } from '../visualizer/visualizer.service';
-import { GraphingService } from "../visualizer/graphing.service";
+import { GraphingService } from '../visualizer/graphing.service';
 
 @Component({
-  selector: "my-app",
-  templateUrl: "./app.component.html",
-  styleUrls: ["./app.component.css"],
+  selector: 'my-app',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css'],
   providers: [VisualizerService, GraphingService]
 })
 export class AppComponent {
 
   constructor(private viz: VisualizerService, private graph: GraphingService) {
-    let interval: Observable<number> = Observable.interval(2000);
+    const interval: Observable<number> = Observable.interval(2000);
 
     interval.subscribe(
       (data) => this.validateAuthentication(),
-      (err) => console.log("Error! " + err),
-      () => console.log("Completed!")
+      (err) => console.log('Error! ' + err),
+      () => console.log('Completed!')
     );
 
     // this.viz.switcher();
   }
 
   authToken: string;
-  clientId = "c3720752fc71445eb83d734b369f34a8";
-  redirectUri: string = "https://sleepy-citadel-97880.herokuapp.com/callback";
+  clientId = 'c3720752fc71445eb83d734b369f34a8';
+  redirectUri = 'https://sleepy-citadel-97880.herokuapp.com/callback';
   scopes: string[] = [
-    "user-read-currently-playing",
-    "user-read-playback-state",
-    "user-modify-playback-state"
+    'user-read-currently-playing',
+    'user-read-playback-state',
+    'user-modify-playback-state'
   ];
 
   sections: any[];
@@ -51,16 +51,16 @@ export class AppComponent {
   loggedIn: boolean;
 
   login(): void {
-    let url: string = "https://accounts.spotify.com/authorize/?client_id=" + this.clientId +
-      "&redirect_uri=" + encodeURIComponent(this.redirectUri) +
-      "&scope=" + this.scopes.join("%20") +
-      "&response_type=token";
-    console.log("login url", url);
+    const url: string = 'https://accounts.spotify.com/authorize/?client_id=' + this.clientId +
+      '&redirect_uri=' + encodeURIComponent(this.redirectUri) +
+      '&scope=' + this.scopes.join('%20') +
+      '&response_type=token';
+    console.log('login url', url);
     location.href = url;
   }
 
   createRequest(method: string, url: string, onload: any): XMLHttpRequest {
-    let request: XMLHttpRequest = new XMLHttpRequest();
+    const request: XMLHttpRequest = new XMLHttpRequest();
     request.open(method, url);
     if (method !== 'GET') {
       request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
@@ -71,15 +71,15 @@ export class AppComponent {
   }
 
   createAuthorizedRequest(method: string, url: string, onload: any): XMLHttpRequest {
-    let request: XMLHttpRequest = this.createRequest(method, url, onload);
+    const request: XMLHttpRequest = this.createRequest(method, url, onload);
     request.setRequestHeader('Authorization', 'Bearer ' + this.accessToken);
     return request;
   }
 
   validateAuthentication(): void {
     console.log('location.hash', location.hash);
-    let lochash: string = location.hash.substr(1);
-    let newAccessToken: string = lochash.substr(lochash.indexOf('access_token=')).split('&')[0].split('=')[1];
+    const lochash: string = location.hash.substr(1);
+    const newAccessToken: string = lochash.substr(lochash.indexOf('access_token=')).split('&')[0].split('=')[1];
     if (newAccessToken) {
       localStorage.setItem('access_token', newAccessToken);
       this.accessToken = newAccessToken;
@@ -123,7 +123,7 @@ export class AppComponent {
       }
 
       // console.log("got data", request.responseText);
-      let data: any = JSON.parse(request.responseText);
+      const data: any = JSON.parse(request.responseText);
       callback(data);
     }).send();
   }
@@ -161,7 +161,7 @@ export class AppComponent {
           return;
         }
 
-        let data: any = JSON.parse(request.responseText);
+        const data: any = JSON.parse(request.responseText);
         console.log('got data', data);
         if (data.item) {
           this.albumURI = data.item.album.uri;
@@ -217,7 +217,7 @@ export class AppComponent {
   }
 
   fetchTrackAnalysis(): void {
-    let id: string = this.trackURI.split(':')[2];
+    const id: string = this.trackURI.split(':')[2];
     this.createAuthorizedRequest('GET', 'https://api.spotify.com/v1/audio-analysis/' + id, (request: any) => {
       if (request.status < 200 || request.status >= 400) {
         // callback(null);
