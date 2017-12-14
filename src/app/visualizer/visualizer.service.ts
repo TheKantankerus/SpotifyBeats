@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/interval';
+import 'rxjs/add/observable/timer';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/repeat';
 import { Subscription } from 'rxjs/Subscription';
