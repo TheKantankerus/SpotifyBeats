@@ -28,6 +28,8 @@ export class VisualizerService {
     counter = 0;
     beat = 1;
 
+    _divCount = 0;
+
     makeSquare(): void {
         this.beatInterval.takeWhile(() => (this.counter % 3 === 0))
             .subscribe((data) => {
@@ -130,8 +132,6 @@ export class VisualizerService {
 
             }, (err) => console.log('Error! ' + err), () => console.log('Completed!'));
     }
-
-    _divCount = 0;
 
     tunnel(): void {
         this.beatInterval.takeWhile(() => (this.counter % 3 === 2))
