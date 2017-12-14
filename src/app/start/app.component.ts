@@ -6,7 +6,7 @@ import { VisualizerService } from '../visualizer/visualizer.service';
 import { GraphingService } from '../visualizer/graphing.service';
 
 @Component({
-  selector: 'my-app',
+  selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
   providers: [VisualizerService, GraphingService]
