@@ -47,7 +47,6 @@ export class GraphingService {
                 this._barWidthCumu += this._barWidth;
                 return this._barWidthCumu;
             });
-        // .attr("y", (data: number) => { return data * 1000; });
 
         this.inputs.pop();
         if (this._barWidth > 1000) {

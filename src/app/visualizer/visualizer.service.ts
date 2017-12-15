@@ -149,7 +149,7 @@ export class VisualizerService {
 
                 if (this._divCount < 1) {
                     document.getElementById('tunnel-container').appendChild(div);
-                } else if (this._divCount > 10) {
+                } else if (this._divCount > 10 || parent.innerHeight === 0 || parent.innerWidth === 0) {
                     const tunA: string = 'tunnel' + (this._divCount % 10);
                     const tunB: string = 'tunnel' + (this._divCount % 10 + 1);
                     const tunC: string = 'tunnel' + (10 - this._divCount % 10);
