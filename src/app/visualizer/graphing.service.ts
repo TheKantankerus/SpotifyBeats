@@ -42,7 +42,7 @@ export class GraphingService {
             .enter().append('rect')
             .attr('style', 'opacity:0.5')
             .attr('width', this._barWidth)
-            .attr('height', (data: number) => { return data * 2000 + (20 * (Math.random() - 0.5)); })
+            .attr('height', (data: number) => data * 2000 + (20 * (Math.random() - 0.5)))
             .attr('x', (data: number, i: number) => {
                 this._barWidthCumu += this._barWidth;
                 return this._barWidthCumu;
@@ -57,19 +57,19 @@ export class GraphingService {
 
 }
 
-type d3Node = {
+interface D3Node {
     id: string;
     xval: number;
     yval: number;
-};
+}
 
-type d3Link = {
+interface D3Link {
     source: string;
     target: string;
     value: number;
-};
+}
 
-type Graph = {
-    nodes: d3Node[],
-    links: d3Link[];
-};
+interface Graph {
+    nodes: D3Node[];
+    links: D3Link[];
+}
